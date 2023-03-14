@@ -1,0 +1,78 @@
+{% load static %}
+{% load env_extras %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Nice UI for ChatGPT</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?41">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+      <nav>
+          <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li id="remove-api-key-button" style="display: none;"><a href="#" onclick="$('#remove-api-key-popup').show()">Remove Your API Key</a></li>
+          </ul>
+      </nav>
+      <main>
+          <h1>A Nice UI For ChatGPT</h1>
+          <div class="grid-view-3">
+            <div id="vr-support"> <i class="fas fa-check-circle"></i>
+              <p>Voice recognition support</p>
+            </div>
+            <div id="vr-support"> <i class="fas fa-check-circle"></i>
+              <p>Image creation support</p>
+            </div>
+            <div id="vr-support"> <i class="fas fa-check-circle"></i>
+              <p>Upcoming feature</p>
+            </div>
+          </div>
+          
+          <div id="select-char">
+            <label>Who do you want to ask ?</label>
+            <select id="character-selection">
+                <option value="chat">ChatGPT</option>
+                <option value="image">Image Creator</option>
+            </select>
+          </div>
+          <div id="enter-api-key" class="grid-view-1" style="display: none;">
+            <div>
+              <button type="button" id="api-key-input" class="custom-button" onclick="showApiKeyPopup()">Enter your API Key</button>
+            </div>
+            <div>
+              <a href="https://platform.openai.com/account/api-keys" rel="noopener" target="_blank" style="font-size: 12px;">Get your API Key here</a>
+            </div>
+          </div>
+          <div id="chat">
+              <div id="messages"></div>
+              <form>
+                  <textarea id="message-input" placeholder="Type your message here..."></textarea>
+                  <button type="submit" id="send-button">Send</button>
+                  <button type="button" id="listen-button" aria-label="Record"><i class="fas fa-microphone"></i></button>
+              </form>
+          </div>
+      </main>
+      <div id="api-key-popup" class="popup">
+        <div class="popup-content">
+          <h2>Enter Your API Key</h2>
+          <input type="text" id="api-key-input-box" placeholder="sk-xxxxxxxxxxxxxxxxxxx" autocomplete="off">
+          <button type="button" class="accept-button" onclick="saveApiKey()">Save</button>
+          <button type="button" class="reject-button" onclick="hideApiKeyPopup()">Cancel</button>
+        </div>
+      </div>
+      <div id="remove-api-key-popup" class="popup">
+        <div class="popup-content">
+          <h2>Remove Your API Key ?</h2>
+          <button type="button" class="accept-button" onclick="removeApiKey()">Yes</button>
+          <button type="button" class="reject-button" onclick="$('#remove-api-key-popup').hide()">No</button>
+        </div>
+      </div>
+</body>
+<input id="FREE_URL" value="{% get_env_var 'FREE_URL' %}" type="hidden" />
+<script src="{% static 'js/script.js' %}?76"></script>
+</html>
