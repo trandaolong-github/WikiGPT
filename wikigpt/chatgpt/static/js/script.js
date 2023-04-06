@@ -89,7 +89,11 @@ function handleSendEvent(e){
       if (selectedValue == "chat") {
         url = "https://api.openai.com/v1/chat/completions"
         data = {"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": message}]}
-      } else {
+      } else if (selectedValue == "vntranslate") {
+        url = "https://api.openai.com/v1/chat/completions"
+        data = {"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "translate to vietnamese: " + message}]}
+      }
+      else {
         url = "https://api.openai.com/v1/images/generations"
         data = {"prompt": message, "n": 1, "size": "512x512"}
       }
@@ -100,7 +104,7 @@ function handleSendEvent(e){
       url, OpenAiApiKey, data
     )
     .then(data => {
-      if (selectedValue == "chat") {
+      if (selectedValue == "chat" || selectedValue == "vntranslate") {
         receiveMessage('Bot', data.choices[0].message.content);
       } else {
         receiveImage('Bot', data.data[0].url) 
