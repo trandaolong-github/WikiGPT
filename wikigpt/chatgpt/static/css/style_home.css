@@ -1,0 +1,54 @@
+h1 {
+  text-align: center;
+  font-size: 5vw;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  background-image: linear-gradient(to right, #f7981c, #f06d55, #ae62a9, #4a6bbe, #1668b0, #26a649);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.function {
+  height: 100px;
+  margin: 10px;
+  text-align: center;
+  line-height: 100px;
+  font-size: 2vw;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.function1 { background-color: #F94144; color: #FFFFFF; }
+.function2 { background-color: #F3722C; color: #FFFFFF; }
+.function3 { background-color: #F9C74F; color: #FFFFFF; }
+.function4 { background-color: #90BE6D; color: #FFFFFF; }
+.function5 { background-color: #577590; color: #FFFFFF; }
+.function6 { background-color: #277DA1; color: #FFFFFF; }
+
+.function:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-accept {
+  background-color: #0edb45;
+}
+
+.btn-reject {
+  background-color: #e95757;
+}
+
+.modal-header {
+  border-bottom: 0px;
+  justify-content: center;
+}
+
+.modal-body {
+  justify-content: center;
+}
+
+.modal-footer {
+  border-top: 0px;
+  justify-content: center;
+}

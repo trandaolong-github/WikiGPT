@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+
+            <!--Sidebar-->
+            <div class="col-2 g-0 d-none d-md-block bg-secondary sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--Main Content-->
+            <div class="col-10 g-0 ml-sm-auto">
+                <div class="row align-items-center" style="background-color: #ffbb00;">
+                    <div class="col-1">
+                        <button type="button" class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-justify" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="col-10">
+                        <h5 class="text-center">
+                            New chat
+                        </h5>
+                    </div>
+                    <div class="col-1">
+                        <!-- TODO: Implement new button here -->
+                    </div>
+                </div>
+                <div class="chat-window">
+                    <h1 class="text-center">
+                        <span class="multicolor">
+                            {% block title %}{% endblock %}
+                        </span>
+                    </h1>
+                    <!--Chat messages-->
+                    <div id="messages" class="col">
+                    </div>
+                </div>
+                <div class="row align-items-end chat-input">
+                    <!--Chat input-->
+                    <div class="col-10">
+                        <!-- <textarea id="message-input" class="form-control" placeholder="Type your message..." style="height: 37px; resize: none; flex-grow: 1; overflow: hidden;"></textarea> -->
+                        <textarea id="message-input" class="form-control" placeholder="Type your message..." style="height: 37px; resize: none; overflow: hidden;"></textarea>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Bootstrap JS-->
+    <script src="{% static 'js/script.js'%}?13"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% block script %}{% endblock %}
+</body>
+</html>
