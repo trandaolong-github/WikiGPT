@@ -2,6 +2,11 @@ html,
 body {
     height: 100%;
 }
+
+a {
+    text-decoration: none;
+}
+
 .multicolor {
     background-image: linear-gradient(to right, #f7981c, #f06d55, #ae62a9, #4a6bbe, #1668b0, #26a649);
     -webkit-background-clip: text;
@@ -75,9 +80,16 @@ code {
     padding: 2px;
 }
 
-.sender {
+.user {
     font-weight: bold;
     margin-right: 0.5rem;
+    color: #26a649;
+}
+
+.assistant {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: #df8816;
 }
 
 .waiting-message {
@@ -86,6 +98,31 @@ code {
     opacity: 0;
     animation: fade-in-out 1s ease-in-out infinite;
 }  
+
+.sidebar {
+    transition: all 0.3s ease-in-out;
+    background-color: rgb(247, 196, 130);
+  }
+  
+  .collapsing-horizontal .sidebar {
+    margin-left: -100%;
+    transition: all 0.3s ease-in-out;
+  }
+
+@media (max-width: 767px) { /* apply the CSS only on small screens such as smartphones */
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .no-gutters {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
 
 @keyframes fade-in-out {
     0% {

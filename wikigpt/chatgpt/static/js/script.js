@@ -1,10 +1,11 @@
 var OpenAiApiKey = localStorage.getItem('OpenAiApiKey') || '';
 const messagesContainer = document.querySelector('#messages');
 const messageInput = document.querySelector('#message-input');
-var prompt = ''
+var characterID = 0;
+var context = [];
 
-function setPrompt(prompt_input) {
-    prompt = prompt_input
+function setCharacterID(id) {
+    characterID = id;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -19,12 +20,17 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+$('#btn-send').click(handleSendEvent)
+
 function handleSendEvent(e){
     e.preventDefault();
     const message = messageInput.value.trim();
     if (message !== '') {
         sendMessage('You', message);
         messageInput.value = '';
+        if (characterID == 1) {
+            context.push({"role": "user", "content": message})
+        }
 
         // Add waiting message
         const waitingMessage = document.createElement('div');
@@ -36,8 +42,25 @@ function handleSendEvent(e){
         var url = ""
         const selectedValue = $('#character-selection').val()
         if(OpenAiApiKey) {
-            url = "https://api.openai.com/v1/chat/completions"
-            data = {"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": prompt + message}]}
+            switch(characterID) {
+                case 1:
+                    // ChatGPT
+                    url = "https://api.openai.com/v1/chat/completions"
+                    data = {"model": "gpt-3.5-turbo", "messages": context}
+                    break;
+                case 4:
+                    // Image generator
+                    url = "https://api.openai.com/v1/images/generations"
+                    data = {"prompt": message, "n": 1, "size": "512x512"}
+                    break;
+                case 5:
+                    // English teacher
+                    url = "https://api.openai.com/v1/chat/completions"
+                    data = {"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": 'translate this to vietnamese: ' + message}]}
+                    break;
+                default:
+                    break;
+            }
         } else {
         url = "dummyurl"
         }
@@ -45,7 +68,15 @@ function handleSendEvent(e){
         url, OpenAiApiKey, data
         )
         .then(data => {
-            receiveMessage('Bot', data.choices[0].message.content);
+            if (characterID == 4) {
+                receiveImage('Bot', data.data[0].url);
+            } else {
+                let response = data.choices[0].message.content;
+                if (characterID == 1) {
+                    context.push({"role":"assistant", "content": response})
+                }
+                receiveMessage('Bot', response);
+            }
         })
         .catch(error => {
         receiveMessage('Bot', error.message)
@@ -62,7 +93,6 @@ messageInput.addEventListener('keydown', (e) => {
     if (e.altKey && e.code === 'Enter') {
         messageInput.value += '\n';
     } else if (e.code === 'Enter') {
-        console.log
         handleSendEvent(e)
     }
 });
@@ -72,14 +102,15 @@ function sendMessage(sender, message) {
     messageDiv.classList.add('message', 'own-message');
     
     const senderSpan = document.createElement('span');
-    senderSpan.classList.add('sender');
+    senderSpan.classList.add('user');
     senderSpan.textContent = sender;
     
-    const messageP = document.createElement('div');
+    const messageP = document.createElement('pre');
     messageP.classList.add('message-text');
-    message = message.replace(/\n/g, "<br>");
+    // message = message.replace(/\n/g, "<br>");
     // Assign raw data, otherwise html doc will be translated, similar for receiveMessage
-    messageP.innerHTML = message;
+    messageP.innerHTML = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    // messageP.innerHTML = message;
     
     messageDiv.appendChild(senderSpan);
     messageDiv.appendChild(messageP);
@@ -92,10 +123,10 @@ function receiveMessage(sender, message) {
     messageDiv.classList.add('message', 'other-message');
     
     const senderSpan = document.createElement('span');
-    senderSpan.classList.add('sender');
+    senderSpan.classList.add('assistant');
     senderSpan.textContent = sender;
     
-    message = message.replace(/```([\s\S]*?)```/g, '<pre><code style="overflow-x:auto;">$1</code></pre>');
+    message = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/```([\s\S]*?)```/g, '<pre><code style="overflow-x:auto;">$1</code></pre>');
     message = message.replace(/\n\n/, "");
     message = message.replace(/\n\n/g, "<br><br>");
     message = message.replace(/`([\s\S]*?)`/g, '<i><b>$1</b></i>');
@@ -110,6 +141,25 @@ function receiveMessage(sender, message) {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
+function receiveImage(sender, url) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', 'other-message');
+      
+    const senderSpan = document.createElement('span');
+    senderSpan.classList.add('sender');
+    senderSpan.textContent = sender;
+    
+    const imgElement = document.createElement('img');
+    imgElement.classList.add('content');
+    imgElement.setAttribute('src', url);
+    
+    messageDiv.appendChild(senderSpan);
+    messageDiv.appendChild(imgElement);
+      
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}        
+
 async function postData(url = "", apiKey, data = {}) {
     var headers = {'Content-Type': 'application/json'}
     if(apiKey) {
@@ -123,9 +173,11 @@ async function postData(url = "", apiKey, data = {}) {
     });
     if(!response.ok) {
         if(!apiKey) {
-        throw new Error("OpenAI currently not available. Please try again later or use your own API Key")
+            throw new Error("OpenAI currently not available. Please try again later or use your own API Key")
         } else {
-        throw new Error("OpenAI currently not available !")
+            // const result = await response.json();
+            // console.log(result)
+            throw new Error("OpenAI currently not available ! Perhaps context length is exceeded, please try a new chat")
         }
     }
     return response.json()

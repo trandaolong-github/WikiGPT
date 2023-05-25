@@ -3,9 +3,22 @@ h1 {
   font-size: 5vw;
   margin-top: 0rem;
   margin-bottom: 0rem;
+  /* background-image: linear-gradient(to right, #f7981c, #f06d55, #ae62a9, #4a6bbe, #1668b0, #26a649);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+}
+
+.multicolor {
   background-image: linear-gradient(to right, #f7981c, #f06d55, #ae62a9, #4a6bbe, #1668b0, #26a649);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+a {
+  text-decoration: none;
 }
 
 .function {

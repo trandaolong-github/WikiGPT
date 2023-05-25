@@ -9,5 +9,8 @@ def chat_gpt(request):
 def english_teacher(request):
     return render(request, 'english_teacher.html')
 
+def image_generator(request):
+    return render(request, 'image_generator.html')
+
 def home(request):
     return render(request, 'home.html')

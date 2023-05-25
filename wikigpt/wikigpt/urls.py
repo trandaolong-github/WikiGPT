@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chat_gpt/', views.chat_gpt, name='chat-gpt'),
     path('english_teacher/', views.english_teacher, name='english-teacher'),
+    path('image_generator/', views.image_generator, name='image-generator'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
