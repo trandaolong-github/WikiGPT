@@ -7,7 +7,7 @@
 	<title>WikiGPT</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<link rel="stylesheet" href="{% static 'css/style_home.css' %}?1">
+	<link rel="stylesheet" href="{% static 'css/style_home.css' %}?12">
 </head>
 <body>
 	<div class="container mt-5">
@@ -20,35 +20,44 @@
               <a href="https://platform.openai.com/account/api-keys" rel="noopener" target="_blank" style="font-size: 12px;">Get your API Key here</a>
             </div>
         </div>
-		<div id="remove-api-key" class="text-center" style="display: none;">
-			<button type="button" id="api-key-button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#remove-api-key-popup">Remove your API Key</button>
+		<div id="remove-api-key" class="text-center" style="display: none; margin-bottom: 2rem;">
+			<button type="button" id="api-key-button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#remove-api-key-popup">Remove API Key</button>
 		</div>
-		<div id="main-functions" class="row" style="display: none;">
-			<div class="col-4">
-				<a href="{% url 'chat-gpt' %}">
-					<div class="function function1">
-						ChatGPT
-					</div>
-				</a>
-			</div>
-			<!-- <div class="col-4">
-				<div class="function function2">Lawyer</div>
-			</div>
-			<div class="col-4">
-				<div class="function function3">Chef</div>
-			</div> -->
-			<div class="col-4">
-				<a href="{% url 'image-generator' %}">
-					<div class="function function4">Image Generator</div>
-				</a>
-			</div>
-			<div class="col-4">
-				<a href="{% url 'english-teacher' %}">
-					<div class="function function5">
-						<!-- English Teacher -->
-						English Translator
-					</div>
-				</a>
+		<div id="main-functions">
+			<div class="d-flex flex-row justify-content-around" style="display: none;">
+				<div class="col-4">
+					<a href="{% url 'chat-gpt' %}">
+						<div class="card function1 mb-3" style="max-width: 25rem; text-align: center; margin: 0.1rem;">
+							<div class="card-body">
+								<div class="function">
+									ChatGPT
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-4">
+					<a href="{% url 'image-generator' %}">
+						<div class="card function4 mb-3" style="max-width: 25rem; text-align: center; margin: 0.1rem;">
+							<div class="card-body">
+								<div class="function">
+									Image Generator
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+				<div class="col-4">
+					<a href="{% url 'english-teacher' %}">
+						<div class="card function5 mb-3" style="max-width: 25rem; text-align: center; margin: 0.1rem;">
+							<div class="card-body">
+								<div class="function">
+									English Translator
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -82,6 +91,6 @@
 		</div>
 	</div>
 </body>
-<script src="{% static 'js/script.js'%}"></script>
+<script src="{% static 'js/script.js'%}?1"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </html>

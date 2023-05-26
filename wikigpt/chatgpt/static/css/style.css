@@ -1,7 +1,13 @@
-html,
+/* html,
 body {
     height: 100%;
+} */
+
+html, body {
+    height: 100%;
+    width: auto!important; overflow-x: hidden!important
 }
+
 
 a {
     text-decoration: none;
@@ -21,7 +27,7 @@ a {
 
 #messages {
     overflow-y: auto;
-    max-height: 80vh;
+    max-height: 78vh;
 }
 
 .chat-input {
@@ -121,6 +127,9 @@ code {
     .no-gutters {
         padding-left: 0;
         padding-right: 0;
+    }
+    #messages {
+        max-height: 70vh;
     }
 }
 
